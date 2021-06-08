@@ -1,8 +1,34 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const app = express();
 
 const PORT = process.env.PORT ? process.env.PORT : 3000;
+
+//Create the routes to tie the client-side JavaScript events to the appropriate database functions
+//ADD ROUTES HERE
+const usersRoutes = require('./router/usersRoutes.js');
+const progressRoutes = require('./router/progressRoutes.js');
+const groupsRoutes = require('./router/groupsRoutes.js');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+
+//  >>  FETCH REQUEST TEST/ FLOW TEST  <<
+app.use((req, res, next) => {
+  console.log(`
+  ***** FLOW TEST *****\n
+  METHOD: ${req.method}\n
+  URL: ${req.url}\n`);
+  return next();
+});
+
+//Route handlers
+app.use('/api/users', usersRoutes);
+app.use('/api/progress', progressRoutes);
+app.use('/api/groups', groupsRoutes);
 
 //Serve HTML and bundled JS in production
 if (process.env.NODE_ENV === "production") {
