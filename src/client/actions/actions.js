@@ -1,37 +1,37 @@
 import * as types from './actionTypes.js';
 import { dispatch } from 'react-redux';
 
-export const login = (loggedIn) => ({
+export const loginActionCreator = (loggedIn) => ({
   type: types.LOG_IN,
   payload: loggedIn
 });
 
-export const logout = (loggedOut) => ({
+export const logoutActionCreator = (loggedOut) => ({
   type: types.LOG_OUT,
   payload: loggedOut
 });
 
-export const createUser = (newUser) => ({
+export const createUserActionCreator = (newUser) => ({
   type: types.CREATE_USER,
   payload: newUser
 });
 
-export const getProgress = (progress) => ({
+export const getProgressActionCreator = (progress) => ({
   type: types.GET_PROGRESS,
   payload: progress
 });
 
-export const addProgress = (progress) => ({
+export const addProgressActionCreator = (progress) => ({
   type: types.ADD_PROGRESS,
   payload: progress
 });
 
-export const deleteProgress = (progress) => ({
+export const deleteProgressActionCreator = (progress) => ({
   type: types.DELETE_PROGRESS,
   payload: progress
 });
 
-export const updateProgress = (progress) => ({
+export const updateProgressActionCreator = (progress) => ({
   type: types.UPDATE_PROGRESS,
   payload: progress
 });
