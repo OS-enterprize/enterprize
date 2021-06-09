@@ -11,7 +11,7 @@ const initialState = {
   progress_items: []
 }
 
-const mainReducer (state = initialState, action) => {
+const mainReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.LOG_IN:
       const isLoggedIn = action.payload.login ? true : false;
@@ -50,25 +50,25 @@ const mainReducer (state = initialState, action) => {
 
     //Not clear on the logic for this reducer
     case types.DELETE_PROGRESS:
-      const newProgressItems = state.progress_items.map(progress) => {
+      const newProgressItems = state.progress_items.map((progress) => {
         if (progress.id === action.payloads.progress.id) {
           return {
             ...progress,
           }
         }
         return progress;
-      }
+      });
       return {
         ...state,
         progress_items: newProgressItems,
       };
 
     case types.UPDATE_PROGRESS:
-      const newProgressItems = state.progress_items.map(progress) => {
+      const newProgressItems = state.progress_items.map((progress) => {
         if (progress.id === action.payloads.progress.id) {
           progress = action.payloads.progress;
         }
-      }
+      });
       return {
         ...state,
         progress_items: newProgressItems,
