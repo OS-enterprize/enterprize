@@ -34,7 +34,7 @@ export class PipelineContainer extends Component {
 
     //Create pipeline components (for progress items) for each of the user's progress items
     const progressItems = [];
-    for (const progressItem of this.props.progressItems) {
+    this.props.progressItems.forEach((progressItem, idx) => {
       progressItems.push(
         <PipelineComponent 
           {...progressItem}
@@ -42,9 +42,10 @@ export class PipelineContainer extends Component {
           progressId={this.props.progressId}
           updateProgressItem={this.props.updateProgressItem}
           removeProgressItem={this.props.removeProgressItem}
+          key={`pipeline-${idx}`}
         />
       )
-    }
+    })
 
     //Render an overlay form for adding a new progress item
     let addProgressForm;
