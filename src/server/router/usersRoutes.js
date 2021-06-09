@@ -6,27 +6,45 @@ const usersController = require('../controllers/usersController');
 
 
 //ROUTE FOR DEFAULT (GET) - /api/users/
-router.get('/',
-  (req, res) => {
-    console.log('Entered /users/');
-    res.status(200).json();
-  }
-);
+router.get('/', 
+    usersController.verifySessionCookie, 
+    usersController.getUserInfoByCookie, 
+    usersController.getGroupsFromUserID,
+    usersController.constructResponse,
+    (req, res) => {
+    return res.status(200).json(res.locals.finalResponse);
+})
+
 
 //ROUTE FOR LOGIN (POST) - /api/users/login
-router.post('/login',
-  (req, res) => {
-    console.log('Entered /users/login')
+router.post('/login', 
+    usersController.getUserInfoByUsername, 
+    usersController.verifyPassword,
+    usersController.getGroupsFromUserID, 
+    usersController.createSSID,
+    usersController.setCookie,
+    usersController.addSessionToDB, 
+    usersController.constructResponse,
+    (req, res)=> {
+    return res.status(200).json(res.locals.finalResponse);
+});
+
+
+//ROUTE FOR CREATING A NEW USER (POST) - /api/users/create
+router.post('/create', 
+    usersController.encryptPassword,
+    usersController.insertUserIntoUsers,
+    usersController.getUserInfoByUsername, 
+    usersController.getGroupsFromUserID, 
+    usersController.createSSID,
+    usersController.setCookie,
+    usersController.addSessionToDB,
+    usersController.constructResponse,
+  (req, res)=> {
+    return res.status(200).json(res.locals.finalResponse);
   }
 );
 
-//ROUTE FOR CREATING A NEW USER (POST) - /api/users/create
-router.post('/create',
-  (req, res) => {
-    console.log('Entered /users/create');
-    res.status(200).json();
-  }
-);
 
 //ROUTE FOR ADDING A USER TO A GROUP (POST) - /api/users/groups
 router.post('/groups',
