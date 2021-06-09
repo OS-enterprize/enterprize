@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 const usersController = {};
 
-
+/** */
 usersController.verifySessionCookie = (req, res, next) => {
     
     if (!req.cookies.ssid) {
@@ -124,7 +124,7 @@ usersController.getGroupsFromUserID = (req, res, next) => {
         if (res.locals.verifySession === false || res.locals.loginSuccess === false || res.locals.verifyInfo === false) return next();
         const { id: userId } = res.locals.allUserInfo;
 
-        const query = 'SELECT group_id FROM users_groups WHERE user_id=$1'
+        const query = 'SELECT group_id FROM user_groups WHERE user_id=$1'
         const values = [userId];
         db.query(query, values)
             .then(data => {
@@ -149,7 +149,6 @@ usersController.getUserInfoByUsername = (req, res, next) => {
 
     db.query(query, values)
         .then(data => {
-            console.log(data.rows)
             if (data.rows.length <= 0) {
                 res.locals.loginSuccess = false;
                 res.locals.finalResponse = {};
