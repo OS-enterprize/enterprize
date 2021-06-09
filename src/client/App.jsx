@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MainPage from './pages/MainPage.jsx';
 
 class App extends Component {
 
@@ -9,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <div id='app'>
-        Hello World! Go get a great job!
+        <MainPage />
       </div>
     )
   }
