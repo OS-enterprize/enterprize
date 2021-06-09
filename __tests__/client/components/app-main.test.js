@@ -1,33 +1,29 @@
 /*
-Tests for the highest-level containers for the main application.
+Tests for the top-level components/containers for the main application.
+In other words, the top of the component tree.
 
-Tested containres include:
-
-
+Tested containers include:
+  - MainPage
+  - HeaderContainer
 */
 
-const enzyme = require('enzyme');
-const path = require('path');
+import enzyme from 'enzyme'
+import React from 'react';
 // const ShallowRenderer = require('react-test-renderer/shallow')
 
-const clientDir = path.resolve(__dirname, '../../src/client');
+import MainPage from '../../../src/client/pages/MainPage.jsx';
+import HeaderContainer from '../../../src/client/containers/HeaderContainer.jsx';
+import PipelineContainer from '../../../src/client/containers/PipelineContainer.jsx';
+import BoardsContainer from '../../../src/client/containers/BoardsContainer.jsx';
 
-const MainPage = require(path.join(clientDir, './pages/MainPage.jsx'));
-const HeaderContainer = require(path.join(clientDir, './containers/HeaderContainer.jsx'));
-const PipelineContainer = require(path.join(clientDir, './containers/PipelineContainer.jsx'));
-const BoardsContainer = require(path.join(clientDir, './containers/BoardsContainer.jsx'));
-
-describe('high-level components', () => {
+describe('top-level components', () => {
 
   describe('MainPage', () => {
 
-    let wrapper;
-    beforeEach(() => {
-      wrapper = enzyme.shallow(<MainPage/>)
-    });
+    const wrapper = enzyme.shallow(<MainPage />);
 
     it('should only render three child mnodes', () => {
-      expect(wrapper.children).toHaveLength(3);
+      expect(wrapper.children()).toHaveLength(3);
     });
 
     it('should render a HeaderContainer', () => {
@@ -42,4 +38,27 @@ describe('high-level components', () => {
       expect(wrapper.find(BoardsContainer)).toHaveLength(1);
     });
   });
+
+  describe('HeaderContainer', () => {
+
+    let wrapper = enzyme.shallow(<HeaderContainer firstName={'Schno'}/>)
+    it('should only render two child nodes', () => {
+      expect(wrapper.children()).toHaveLength(2);
+    });
+
+    it('should render a HeaderNav as the second child node', () => {
+      expect(wrapper.find('HeaderNav')).toHaveLength(1);
+      expect(wrapper.children()[2]).toEqual(wrapper.find('HeaderNav')[0]);
+    });
+
+    it('should render a div with the correct class name', () => {
+      expect(wrapper.find('.greeting-text-container')).toHaveLength(1);
+    });
+
+    it('greeting-text-container should render a h1 with the correct text', () => {
+      expect(wrapper.find('.greeting-text-container > h1').text()).toEqual('Welcome, Schno!');
+    });
+  });
+
+
 });
