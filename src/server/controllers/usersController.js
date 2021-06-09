@@ -1,31 +1,42 @@
 //IMPORT MODELS FILE
-const db = require('../models/models.js')
+const db = require('../models/models.js');
+const bcrypt = require('bcrypt');
 
 const usersController = {};
 
 
 usersController.verifySessionCookie = (req, res, next) => {
+    
+    if (!req.cookies.ssid) {
 
-    // if (!res.cookie.ssid) {
-    //     res.locals.verifiedSession = false;
-    //     res.locals.finalResponse = {};
-    //     return next();
-    // }
-    //need to change to req.cookies
-    const { ssid } = req.body
-    //console.log("FROM REQ BODY in VerifySessionCookie: ", ssid)
-    const query = 'SELECT user_id AS userid FROM sessions WHERE ssid=$1'
+        res.locals.verifySession = false;
+        res.locals.finalResponse = {};
+        return next();
+    }
+    
+    const { ssid } = req.cookies
+    
+    const query = 'SELECT user_id AS userid, created_at FROM sessions WHERE ssid=$1'
     const values = [ssid];
 
 
     db.query(query, values)
     .then(ssid => {
-        console.log("FROM DB in verifySessionCookie: ", ssid.rows)
+        
         if (ssid.rows.length <= 0) {
             res.locals.verifySession = false;
             res.locals.finalResponse = {};
             return next();
         } 
+        const currentTime = Date.now()
+        const dataBaseTime = new Date(ssid.rows[0].created_at) - 14400000;
+        
+        if (currentTime - dataBaseTime > 120000) {
+            res.locals.verifySession = false;
+            res.locals.finalResponse = {};
+            return next();
+        }
+       
         res.locals.verifySession = true;
         res.locals.userId = ssid.rows[0].userid;
         
@@ -34,10 +45,12 @@ usersController.verifySessionCookie = (req, res, next) => {
     
 }
 
-usersController.createSSID = (req, res, next) => {
-    if (res.locals.verifySession === false || res.locals.loginSuccess === false) return next();
 
-        const ssid = Math.floor(Math.random() * 100000);
+
+usersController.createSSID = (req, res, next) => {
+    if (res.locals.verifySession === false || res.locals.loginSuccess === false || res.locals.verifyInfo === false) return next();
+
+        const ssid = Math.floor(Math.random() * 100000000);
 
         const query = `SELECT ssid FROM sessions WHERE ssid=$1`;
         const values = [ssid];
@@ -57,16 +70,16 @@ usersController.createSSID = (req, res, next) => {
 }
 
 usersController.setCookie = (req, res, next) => {
-    if (res.locals.verifySession === false || res.locals.loginSuccess === false) return next();
-    console.log('IN setCookie')
-    res.cookie('ssid', res.locals.ssid, {httpOnly: true});
+    if (res.locals.verifySession === false || res.locals.loginSuccess === false || res.locals.verifyInfo === false) return next();
+    //max age is being set as 2 minutes
+    res.cookie('ssid', res.locals.ssid, {httpOnly: true, maxAge: 120000});
     return next();
 }
 
 usersController.addSessionToDB = (req, res, next) => {
-    if (res.locals.verifySession === false || res.locals.loginSuccess === false) return next();
+    if (res.locals.verifySession === false || res.locals.loginSuccess === false || res.locals.verifyInfo === false) return next();
     const { ssid } = res.locals;
-    const { id: userId } = res.locals.userInitialData;
+    const { id: userId } = res.locals.allUserInfo;
     const query = 'INSERT INTO sessions (ssid, user_id) VALUES ($1, $2)';
     const values = [ssid, userId];
     
@@ -83,7 +96,6 @@ usersController.addSessionToDB = (req, res, next) => {
 }
 
 usersController.getUserInfoByCookie = (req, res, next) => {
-
         if (res.locals.verifySession === false) return next();
         const { userId } = res.locals;
         const query = `SELECT id, first_name, last_name, email, username FROM users WHERE id=$1`;
@@ -97,7 +109,7 @@ usersController.getUserInfoByCookie = (req, res, next) => {
                 })
             }
 
-            res.locals.userInitialData = data.rows[0];
+            res.locals.allUserInfo = data.rows[0];
             return next();
             
         }).catch(err => {
@@ -109,16 +121,14 @@ usersController.getUserInfoByCookie = (req, res, next) => {
 }
 
 usersController.getGroupsFromUserID = (req, res, next) => {
-        if (res.locals.verifySession === false || res.locals.loginSuccess === false) return next();
-        const { id: userId } = res.locals.userInitialData;
+        if (res.locals.verifySession === false || res.locals.loginSuccess === false || res.locals.verifyInfo === false) return next();
+        const { id: userId } = res.locals.allUserInfo;
 
         const query = 'SELECT group_id FROM users_groups WHERE user_id=$1'
         const values = [userId];
         db.query(query, values)
             .then(data => {
-                // console.log(data.rows)
                 const groupIds = data.rows.map(object => object.group_id)
-                console.log('GROUP IDS IN GETGROUPSFROMUSERID: ', groupIds)
                 res.locals.groupIds = groupIds;
                 return next();
             }).catch(err => {
@@ -131,7 +141,9 @@ usersController.getGroupsFromUserID = (req, res, next) => {
 }
 
 usersController.getUserInfoByUsername = (req, res, next) => {
-    const { username, password } = req.body;
+    if (res.locals.verifyInfo === false) return next();
+
+    const { username } = req.body;
     const query = `SELECT * FROM users WHERE username=$1`
     const values = [username];
 
@@ -144,26 +156,49 @@ usersController.getUserInfoByUsername = (req, res, next) => {
                 return next();
             }
 
-            if (data.rows[0].password !== password) {
-                res.locals.loginSuccess = false;
-                res.locals.finalResponse = {};
-                return next();
-            }
-            const { id, first_name, last_name, email, username } = data.rows[0];
-            res.locals.loginSuccess = true;
-            res.locals.userInitialData = {
-                id,
-                first_name,
-                last_name,
-                email,
-                username
-            }
+            res.locals.allUserInfo = data.rows[0]
             return next();
+            
         }).catch(err => {
             next({
                 log: `Error in getUserInfoByUsername when executing query to DB: ${err}`
             })
         })
+}
+
+usersController.encryptPassword = (req, res, next) => {
+    let { password } = req.body;
+    let saltRounds = 10
+    bcrypt.hash(password, saltRounds)
+        .then(hashPassword => {
+            req.body.password = hashPassword;
+            return next();
+        }).catch(err=> {
+            return next({
+                log: `Error hashing password in encryptPassword ${err}`
+            })
+        })
+}
+
+
+usersController.verifyPassword = (req, res, next) => {
+    if (res.locals.loginSuccess === false) return next();
+    let { password } = req.body;
+
+
+    bcrypt.compare(password, res.locals.allUserInfo.password)
+        .then(boolean => {
+            if (!boolean) {
+                res.locals.loginSuccess = false;
+                res.locals.finalResponse = {};
+                return next();
+            }
+
+            return next();
+        }).catch(err=> {
+            return next({log: 'Error when comparing passwords in verifyPassword'})
+        })
+    
 }
 
 usersController.insertUserIntoUsers = (req, res, next) => {
@@ -173,19 +208,22 @@ usersController.insertUserIntoUsers = (req, res, next) => {
 
     db.query(query, values)
         .then(data => {
+            res.locals.verifyInfo = true;
             return next();
         }).catch(err=> {
-            return next({
-                log: `Error in insterUserIntoUsers when executing query: ${err}`
-            })
+            res.locals.verifyInfo = false;
+            res.locals.finalResponse = {err: 'username or email exist'}
+            return next();
         })
 
 }
 
 usersController.constructResponse = (req, res, next) => {
-    if (res.locals.verifySession === false || res.locals.loginSuccess === false) return next();
+    if (res.locals.verifySession === false || 
+        res.locals.loginSuccess === false || 
+        res.locals.verifyInfo === false) return next();
 
-    const { id: userId, first_name: firstName, last_name: lastName, email, username  } = res.locals.userInitialData;
+    const { id: userId, first_name: firstName, last_name: lastName, email, username  } = res.locals.allUserInfo;
     const { groupIds } = res.locals;
 
     const response = {

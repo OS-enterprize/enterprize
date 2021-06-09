@@ -15,6 +15,7 @@ router.get('/',
 
 router.post('/login', 
     usersController.getUserInfoByUsername, 
+    usersController.verifyPassword,
     usersController.getGroupsFromUserID, 
     usersController.createSSID,
     usersController.setCookie,
@@ -25,6 +26,7 @@ router.post('/login',
 });
 
 router.post('/create', 
+    usersController.encryptPassword,
     usersController.insertUserIntoUsers,
     usersController.getUserInfoByUsername, 
     usersController.getGroupsFromUserID, 
