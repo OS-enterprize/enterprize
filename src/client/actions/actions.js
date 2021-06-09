@@ -3,12 +3,12 @@ import { dispatch } from 'react-redux';
 
 export const loginActionCreator = (loggedIn) => ({
   type: types.LOG_IN,
-  payload: loggedIn
+  payload: login
 });
 
 export const logoutActionCreator = (loggedOut) => ({
   type: types.LOG_OUT,
-  payload: loggedOut
+  payload: logout
 });
 
 export const createUserActionCreator = (newUser) => ({
