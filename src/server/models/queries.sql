@@ -14,8 +14,8 @@ CREATE TABLE users (
 --  >>  Progress Table  <<
 CREATE TABLE progress (
     id SERIAL PRIMARY KEY,
-    user_id SERIAL,
-    progress_type_id SERIAL,
+    user_id INT NOT NULL,
+    progress_type_id INT NOT NULL,
     company VARCHAR(255) NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     comments VARCHAR(255) NOT NULL,
@@ -33,8 +33,8 @@ CREATE TABLE progress_types (
 
 -- >>  User User Groups Table  <<
 CREATE TABLE user_groups (
-    user_id SERIAL,
-    group_id SERIAL,
+    user_id INT NOT NULL,
+    group_id INT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(group_id) REFERENCES groups(id)
   );
@@ -49,7 +49,7 @@ CREATE TABLE groups (
 --  >>  Sessions Table  <<
 CREATE TABLE sessions (
     ssid INT UNIQUE NOT NULL,
-    user_id SERIAL,
+    user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(ssid),
     FOREIGN KEY(user_id) REFERENCES users(id)
