@@ -12,12 +12,6 @@ const initialState = {
 }
 
 const mainReducer (state = initialState, action) => {
-  /*
-  the authenticatedUser actionCreator would dispatch an object with a property type with a value of AUTHENTICATE_USER that would invoke the switch case in the reducer which would toggle the authenticated state to be true. If a user LOGS_OUT, the loggedOut actionCreator should send off an object with the type LOG_OUT that would invoked the switch case in the reducer of LOG_OUT that would change the  authenticated state to be false.
-  */
-
-
-  //if obj empty loginStatus remains false
   switch (action.type) {
     case types.LOG_IN:
       const isLoggedIn = action.payload.login ? true : false;
