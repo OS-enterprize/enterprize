@@ -9,10 +9,19 @@
     "dev": "NODE_ENV=development webpack serve --open & nodemon src/server/server.js",
     "build": "webpack"
   },
+  "babel": {
+    "presets": [
+      "@babel/preset-react",
+      "@babel/preset-env"
+    ]
+  },
   "jest": {
     "setupFilesAfterEnv": [
       "<rootDir>src/setupTests.js"
-    ]
+    ],
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    }
   },
   "repository": {
     "type": "git",
@@ -51,6 +60,7 @@
     "@babel/preset-env": "^7.14.4",
     "@babel/preset-react": "^7.13.13",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "babel-jest": "^27.0.2",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.6",
     "enzyme": "^3.11.0",
