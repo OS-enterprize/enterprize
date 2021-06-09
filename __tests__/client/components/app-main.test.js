@@ -67,5 +67,23 @@ describe('top-level components', () => {
     });
   });
 
+  describe('HeaderNav', () => {
+
+    let wrapper;
+    let mockFn = jest.fn();
+    beforeEach(() => {
+      wrapper = enzyme.shallow(<HeaderNav signOutHandler={mockFn} />);
+    });
+
+    it('should render a single button', () => {
+      expect(wrapper.find('button')).toHaveLength(1);
+    });
+
+    it('should invoke a callback when the button is clicked', () => {
+      wrapper.find('button').simulate('click');
+      expect(mockFn).toHaveBeenCalled();
+    })
+  });
+
 
 });
