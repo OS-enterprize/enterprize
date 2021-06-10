@@ -13,11 +13,21 @@ import {
 
 import '../styles/containers/pipeline-container.scss';
 
-const mapStateToProps = (state) => ({
-  //Update these to use Redux store
-  userId: 2,
-  progressItems: state.users.progressItems
-})
+const mapStateToProps = (state) => {
+
+  console.log('the state is', state);
+  let progressItems;  
+  if (state.users.progressItems.length === 0) {
+    progressItems = state.users.progressItems;
+  } else {
+    progressItems = state.users.progressItems.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+  }
+
+  return {
+    userId: state.users.userId,
+    progressItems: progressItems
+  }
+}
 
 const mapDispatchToProps = (dispatch) => ({
   getProgressItems: (userId) => dispatch(getProgressActionCreator(userId)),
@@ -37,6 +47,7 @@ export class PipelineContainer extends Component {
   }
 
   componentDidMount() {
+    console.log('component did mount', this.props.userId);
     this.props.getProgressItems(this.props.userId);
   }
 

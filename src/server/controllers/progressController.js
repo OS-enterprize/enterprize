@@ -9,11 +9,15 @@ const progressController = {};
 progressController.progressItems = async (req, res, next) => {
   try {
     const { userId } = req.query;
-
-    const query = 'SELECT p.*, pt.* FROM progress p JOIN progress_types pt ON p.progress_type_id=pt.id WHERE user_id IN ($1) AND timestamp > CURRENT_DATE - 7';
+    
+    const query = `
+    SELECT p.*, pt.type_name, pt.type_points
+    FROM progress p 
+      JOIN progress_types pt ON p.progress_type_id=pt.id 
+    WHERE user_id IN ($1) 
+      AND timestamp > CURRENT_DATE - 7`;
     const value = [userId];
     const queryToDB = await db.query(query, value);
-
     const data = queryToDB.rows;
     res.locals.data = data;
 
@@ -34,15 +38,15 @@ progressController.progressItems = async (req, res, next) => {
 progressController.createProgress = async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const { progress_type_id, company, comments } = req.body;
+    const { progress_type_id, company, notes } = req.body;
     
-    const query = 'INSERT INTO progress (user_id, progress_type_id, company, comments) VALUES ($1, $2, $3, $4) RETURNING *';
-    const value = [userId, progress_type_id, company, comments];
+    const query = 'INSERT INTO progress (user_id, progress_type_id, company, notes) VALUES ($1, $2, $3, $4) RETURNING *';
+    const value = [userId, progress_type_id, company, notes];
     const data = await db.query(query, value);
 
     const progressItem = data.rows;
     res.locals.progressItem = progressItem;
-
+ 
     return next();
 
   } catch (error) {
@@ -60,13 +64,16 @@ progressController.addNameAndPoints = async (req, res, next) => {
   try {
     const { progress_type_id } = res.locals.progressItem[0];
 
-    const query = 'SELECT * FROM progress_types WHERE id IN ($1)';
+    const query = 'SELECT pt.type_name, pt.type_points FROM progress_types pt WHERE id IN ($1)';
     const value = [progress_type_id];
     const data = await db.query(query, value);
-
     const progressItemInfo = data.rows[0];
-
-    const combinedObj = { ...res.locals.progressItem[0], ...progressItemInfo }
+    const combinedObj = {
+      ...res.locals.progressItem[0], 
+      progressType: progressItemInfo.type_name,
+      points: progressItemInfo.type_points
+    }
+    console.log('Total Progress item: ', combinedObj);
     res.locals.progressItem = combinedObj;
 
     return next();
@@ -112,13 +119,13 @@ progressController.deleteProgress = async (req, res, next) => {
 progressController.updateProgress = async (req, res, next) => {
   try {
     const { progressId } = req.params;
-    const { progress_type_id, company, comments } = req.body;
-
-    const query = 'UPDATE progress SET progress_type_id = $2, company = $3, comments = $4 WHERE id=$1 RETURNING *';
-    const value = [parseInt(progressId), progress_type_id, company, comments];
+    const { progress_type_id, company, notes } = req.body;
+    
+    const query = 'UPDATE progress SET progress_type_id = $2, company = $3, notes = $4 WHERE id=$1 RETURNING *';
+    const value = [parseInt(progressId), progress_type_id, company, notes];
     const data = await db.query(query, value);
 
-    const progressItem = data.fields;
+    const progressItem = data.rows;
     res.locals.progressItem = progressItem;
 
     return next();

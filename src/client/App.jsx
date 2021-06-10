@@ -27,7 +27,7 @@ class App extends Component {
   componentDidMount() {
     //blank page
     //send a request to check the session
-    this.props.checkSession();
+    if (!this.props.cookieChecked) this.props.checkSession();
   }
 
   render() {
@@ -49,6 +49,7 @@ class App extends Component {
 
       <Router>
         <div>
+         <img src='http://localhost:3000/enterprize-logo.png' id='logo'></img>
           <Switch>
             <Route exact path="/" exact component={MainPageDisplay} />
             <Route path="/signup" component={SignUpUser} />

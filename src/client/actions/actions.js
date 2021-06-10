@@ -29,6 +29,7 @@ export const checkSessionActionCreator = () => (dispatch, getState) => {
   fetch('http://localhost:3000/api/users/')
     .then((resp) => resp.json())
     .then((data) => {
+      console.log('checked cookie data: ', data);
       dispatch({
         type: types.CHECK_COOKIE,
         payload: data
@@ -73,23 +74,3 @@ export const createUserActionCreator = (e) => (dispatch, getState) => {
       console.log(err)
     })
 };
-
-export const getProgressActionCreator = (progress) => ({
-  type: types.GET_PROGRESS,
-  payload: progress
-});
-
-export const addProgressActionCreator = (progress) => ({
-  type: types.ADD_PROGRESS,
-  payload: progress
-});
-
-export const deleteProgressActionCreator = (progress) => ({
-  type: types.DELETE_PROGRESS,
-  payload: progress
-});
-
-export const updateProgressActionCreator = (progress) => ({
-  type: types.UPDATE_PROGRESS,
-  payload: progress
-});

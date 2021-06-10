@@ -1,0 +1,19 @@
+@import '../globals/_template-styles.scss';
+@import '../globals/_variables.scss';
+
+.signup-form {
+
+  display: flex;
+  flex-direction: column;
+
+  width: 50%;
+
+  * {
+    margin: 0.2rem 0;
+  }
+
+  .create-user-submit-button {
+    @extend .primary-button;
+    height: 1.5rem;
+  }
+}

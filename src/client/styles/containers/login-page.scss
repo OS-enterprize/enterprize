@@ -1,0 +1,32 @@
+@import '../globals/_variables.scss';
+@import '../globals/template-styles';
+
+.user-credential-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 8rem;
+  padding: 4rem 0;
+  border: 1px solid $PRIMARY_BORDER;
+  background-color: $SECONDARY_BG_COLOR;
+}
+
+.user-credential-form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+
+  * {
+    margin: 0.2rem;
+  }
+
+  .credential-input {
+    @extend .single-line-input;
+  }
+
+  #loginButton {
+    @extend .primary-button;
+    height: 1.5rem;
+    margin: 1rem 0;
+  }
+}
