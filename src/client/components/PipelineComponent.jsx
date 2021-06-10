@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../styles/components/pipelineComponent.scss';
+import '../styles/components/pipeline-component.scss';
 
 export default (props) => {
 
@@ -91,7 +91,7 @@ export default (props) => {
 
         <button 
           className='remove-progress-button'
-          onClick={() => props.removeProgressItem(props.progressId)}
+          onClick={() => props.removeProgressItem(props.progressId, props.userId)}
         >Remove</button>
       </div>
 

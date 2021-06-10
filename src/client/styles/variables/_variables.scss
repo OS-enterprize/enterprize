@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@300&display=swap');
+
+$PRIMARY_FONT: 'Spartan', sans-serif;
+
+$BG_COLOR: rgb(242, 247, 255);
+$SECONDARY_BG_COLOR: lighten($BG_COLOR, 90%);
+
+$PRIMARY_BORDER: darken($BG_COLOR, 20%);
+$SECONDARY_BORDER: lighten($PRIMARY_BORDER, 10%);

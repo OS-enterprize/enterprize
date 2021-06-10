@@ -1,0 +1,20 @@
+@import '../variables/_variables.scss';
+
+.pipeline-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $PRIMARY_BORDER;
+  background-color: $SECONDARY_BG_COLOR;
+  padding: 3rem;
+
+  h2 {
+    align-self: center;
+    margin: 0;
+  }
+
+  .add-progress-button {
+    align-self: left;
+    width: 15%;
+  }
+
+}

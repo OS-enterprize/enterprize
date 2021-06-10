@@ -4,6 +4,15 @@ import { connect } from 'react-redux';
 import PipelineComponent from '../components/PipelineComponent.jsx';
 import AddProgressForm from '../components/AddProgressForm.jsx';
 
+import { 
+  getProgressActionCreator,
+  addProgressActionCreator,
+  deleteProgressActionCreator,
+  updateProgressActionCreator
+} from '../actions/progressActionCreators';
+
+import '../styles/containers/pipeline-container.scss';
+
 const mapStateToProps = (state) => ({
   //Update these to use Redux store
   userId: 5,
@@ -15,9 +24,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  addProgressItem: () => console.log('Replace me with an action creator'),
-  updateProgressItem: () => console.log('Replace me with an action creator'),
-  removeProgressItem: () => console.log('Replace me with an action creator')
+  getProgressItems: (userId) => dispatch(getProgressActionCreator(userId)),
+  addProgressItem: (event, userId) => dispatch(addProgressActionCreator(event, userId)),
+  updateProgressItem: (event, progressId) => dispatch(updateProgressActionCreator(event, progressId)),
+  removeProgressItem: (progressId, userId) => dispatch(deleteProgressActionCreator(progressId, userId))
 });
 
 export class PipelineContainer extends Component {
@@ -30,6 +40,10 @@ export class PipelineContainer extends Component {
     this.setState = this.setState.bind(this);
   }
 
+  componentDidMount() {
+    this.props.getProgressItems(this.props.userId);
+  }
+
   render() {
 
     //Create pipeline components (for progress items) for each of the user's progress items
@@ -39,7 +53,7 @@ export class PipelineContainer extends Component {
         <PipelineComponent 
           {...progressItem}
           userId={this.props.userId}
-          progressId={this.props.progressId}
+          progressId={progressItem.id}
           updateProgressItem={this.props.updateProgressItem}
           removeProgressItem={this.props.removeProgressItem}
           key={`pipeline-${idx}`}
