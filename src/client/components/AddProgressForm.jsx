@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/components/add-progress-form.scss';
 
 export default (props) => {
 
@@ -13,8 +14,8 @@ export default (props) => {
     >
 
       <label>
-        Progress
-        <select name='progress-type-selector'>
+        <span className='form-span-label'>Progress</span>
+        <select className='progress-type-selector'>
           <option value='Quick Apply'>Quick Apply</option>
           <option value='Manual Apply'>Manual Apply</option>
           <option value='Phone Screen'>Phone Screen</option>
@@ -24,20 +25,24 @@ export default (props) => {
       </label>
 
       <label>
-        Company
-        <input type='text' name='company-name-input'/>
+        <span className='form-span-label'>Company</span>
+        <input type='text' name='company-name-input' className='company-name-input'/>
       </label>
 
-      <label>
-        Add Notes
-        <input type='text' name='notes-input'/>
-      </label>
+      <div className='notes-container'>
+        <label htmlFor='notes-input' className='notes-input-label'>
+          Add Notes
+        </label>
+        <input type='text' name='notes-input' className='notes-input'/>
+      </div>
       
-      <input type='submit'/>
-
-      <button 
-        onClick={() => props.setState({displayAddProgressForm: false})}
-      >Cancel</button>
+      <div className='add-progress-form-button-container'>
+        <input className='add-progress-form-submit add-progress-form-button' type='submit'/>
+        <button 
+          className='add-progress-form-cancel-button add-progress-form-button'
+          onClick={() => props.setState({displayAddProgressForm: false})}
+        >Cancel</button>
+      </div>
     </form>
   )
 }

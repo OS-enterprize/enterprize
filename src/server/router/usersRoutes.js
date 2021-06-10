@@ -47,21 +47,21 @@ router.post('/create',
 
 
 //ROUTE FOR ADDING A USER TO A GROUP (POST) - /api/users/groups
-// router.post('/groups',
-//   progressController.addToGroup,
-//   (req, res) => {
-//     console.log('Entered /users/groups');
-//     res.status(200).json();
-//   }
-// );
+router.post('/groups',
+  // usersController.addToGroup,
+  (req, res) => {
+    console.log('Entered /users/groups');
+    res.status(200).json();
+  }
+);
 
 //ROUTE FOR DELETING A USER FROM A GROUP (DELETE) - /api/users/groups/:userID/:groupID
-// router.delete('/:userID/:groupID',
-//   progressController.removeFromGroup,
-//   (req, res) => {
-//     console.log('Entered /users/groups Delete');
-//     res.status(200).json();
-//   }
-// );
+router.delete('/:userID/:groupID',
+  // usersController.removeFromGroup,
+  (req, res) => {
+    console.log('Entered /users/groups Delete');
+    res.status(200).json();
+  }
+);
 
 module.exports = router;

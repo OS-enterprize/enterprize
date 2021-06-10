@@ -18,7 +18,7 @@ CREATE TABLE progress (
     progress_type_id INT NOT NULL,
     company VARCHAR(255) NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    comments VARCHAR(255) NOT NULL,
+    comments VARCHAR(255),
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(progress_type_id) REFERENCES progress_types(id)
   );
@@ -75,3 +75,53 @@ INSERT INTO users (
 ALTER TABLE sessions
 ADD user_id varchar(200)
 
+
+--ADDING A PROGRESS ITEMS
+INSERT INTO progress
+(user_id, progress_type_id, company, comments) 
+VALUES 
+('2', '2', 'Amazon', 'Regrettfully filled out job application'),
+('2', '5', 'Google', 'About to be a Googler baby!'),
+('2', '4', 'Netflix', 'Had an in person interview - Netflix wishes...'),
+('2', '2', 'Microsoft', 'Filled out job application'),
+('2', '1', 'Birkshire', 'Sent out a resume')
+
+
+--ADDING A PROGRESS ITEM(S) AND RETURNING ID
+INSERT INTO progress 
+(user_id, progress_type_id, company, comments) 
+VALUES 
+(2, 1, 'HP', 'Sent Resume')
+RETURNING
+(id)
+
+
+--PROGRESS TYPES
+INSERT INTO progress_types
+(type_name, type_points) 
+VALUES 
+('Quick Apply', '1'),
+('Manual Apply', '10'),
+('Phone Screen', '50'),
+('Final Round', '100'),
+('Offer', '500')
+
+
+--DELETING A PROGRESS ITEM
+DELETE FROM progress WHERE id='9' AND user_id='2'
+
+
+--UPDATING A PROGRESS ITEM
+
+
+
+--USING JOIN TO SELECT PROGRESS_TYPES_ID W/ THEIR NAMES
+SELECT p.*, pt.type_name
+FROM progress p
+JOIN progress_types pt ON p.progress_type_id=pt.id
+
+SELECT p.*, pt.*
+FROM progress p
+JOIN progress_types pt ON p.progress_type_id=pt.id
+WHERE user_id IN (2) 
+AND timestamp > CURRENT_DATE - 7

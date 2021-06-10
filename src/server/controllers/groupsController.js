@@ -1,5 +1,5 @@
 //IMPORT MODELS FILE
-//const db = require('../models');
+const db = require('../models/models');
 
 const groupsController = {};
 

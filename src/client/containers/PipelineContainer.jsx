@@ -75,12 +75,14 @@ export class PipelineContainer extends Component {
     return (
       <div className='pipeline-container'>
         <h2 className='pipeline-container-subheader'>My Pipeline</h2>
-        <button 
-          className='add-progress-button'
-          onClick={() => this.setState({ displayAddProgressForm: true})}>
-          Add Item
-        </button>
-        {addProgressForm}
+        <div className='add-progress-container'>
+          <button 
+            className='add-progress-button'
+            onClick={() => this.setState({ displayAddProgressForm: true})}>
+            Add Item
+          </button>
+          {addProgressForm}
+        </div>
         {progressItems}
       </div>
     )

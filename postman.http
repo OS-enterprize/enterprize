@@ -1,0 +1,9 @@
+GET http://localhost:3000/api/progress?userId=2
+
+# POST http://localhost:3000/api/progress/2 HTTP/1.1
+# content-type: application/json
+# {
+#   "progress_type_id" : "1",
+#   "company" : "Comp.inc", 
+#   "comment" : "Sent a resume"
+# }
