@@ -8,10 +8,12 @@ const initialState = {
   lastName: null,
   emailAddress: null,
   username: null,
-  progress_items: []
+  progressItems: []
 }
 
-const mainReducer (state = initialState, action) => {
+const mainReducer = (state = initialState, action) => {
+
+  let progressItems;
   switch (action.type) {
     case types.LOG_IN:
       const isLoggedIn = action.payload.login ? true : false;
@@ -39,41 +41,40 @@ const mainReducer (state = initialState, action) => {
     case types.GET_PROGRESS:
       return {
         ...state,
-        progress_items: action.payload.progress,
+        progressItems: action.payload.progress,
       }
 
-    case types.ADD_PROGRESS:
-      return {
-        ...state,
-        progress_items: state.progress_items.push(action.payload.progress)
-      }
+    case types.ADD_PROGRESS: 
 
-    //Not clear on the logic for this reducer
-    case types.DELETE_PROGRESS:
-      const newProgressItems = state.progress_items.map(progress) => {
-        if (progress.id === action.payloads.progress.id) {
-          return {
-            ...progress,
-          }
-        }
-        return progress;
-      }
+      progressItems = [...state.progressItems];
+      progressItems.push(action.payload);
       return {
         ...state,
-        progress_items: newProgressItems,
+        progressItems
+      };
+  
+    case types.DELETE_PROGRESS: 
+      
+      //Filter out the progress item with the deleted progresm item's ID
+      progressItems = state.progressItems.filter(item => item.id !== action.payload.id);
+      return {
+        ...state,
+        progressItems
       };
 
     case types.UPDATE_PROGRESS:
-      const newProgressItems = state.progress_items.map(progress) => {
-        if (progress.id === action.payloads.progress.id) {
-          progress = action.payloads.progress;
-        }
-      }
+
+      //Find the progress item to be updated and replace it with the payload
+      progressItems = state.progressItems.map(item => {
+        if (item.id === action.payload.id) item = action.payload;
+        return item
+      })
+
       return {
         ...state,
-        progress_items: newProgressItems,
-      };
-
+        progressItems
+      }
+      
     default: return state;
   }
 }
