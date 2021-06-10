@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const cors = require('cors');
 const app = express();
 
 const PORT = process.env.PORT ? process.env.PORT : 3000;
@@ -14,7 +15,7 @@ const groupsRoutes = require('./router/groupsRoutes.js');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
+app.use(cors());
 
 //  >>  FETCH REQUEST TEST/ FLOW TEST  <<
 app.use((req, res, next) => {
