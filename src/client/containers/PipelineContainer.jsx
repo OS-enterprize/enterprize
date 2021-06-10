@@ -15,12 +15,8 @@ import '../styles/containers/pipeline-container.scss';
 
 const mapStateToProps = (state) => ({
   //Update these to use Redux store
-  userId: 5,
-  progressItems: [
-    {id: 5, progressType: 'Quick Apply', company: 'Google', points: 1, notes: '', timestamp: Date.now()},
-    {id: 6, progressType: 'Phone Screen', company: 'Facebook', points: 25, notes: 'z', timestamp: Date.now()},
-    {id: 143, progressType: 'Offer', company: 'Cool', points: 500, notes: 'af', timestamp: Date.now()}
-  ],
+  userId: 2,
+  progressItems: state.users.progressItems
 })
 
 const mapDispatchToProps = (dispatch) => ({

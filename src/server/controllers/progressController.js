@@ -34,10 +34,10 @@ progressController.progressItems = async (req, res, next) => {
 progressController.createProgress = async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const { progress_type_id, company, comment } = req.body;
-
+    const { progress_type_id, company, comments } = req.body;
+    
     const query = 'INSERT INTO progress (user_id, progress_type_id, company, comments) VALUES ($1, $2, $3, $4) RETURNING *';
-    const value = [userId, progress_type_id, company, comment];
+    const value = [userId, progress_type_id, company, comments];
     const data = await db.query(query, value);
 
     const progressItem = data.rows;
@@ -65,6 +65,7 @@ progressController.addNameAndPoints = async (req, res, next) => {
     const data = await db.query(query, value);
 
     const progressItemInfo = data.rows[0];
+
     const combinedObj = { ...res.locals.progressItem[0], ...progressItemInfo }
     res.locals.progressItem = combinedObj;
 
@@ -114,7 +115,7 @@ progressController.updateProgress = async (req, res, next) => {
     const { progress_type_id, company, comments } = req.body;
 
     const query = 'UPDATE progress SET progress_type_id = $2, company = $3, comments = $4 WHERE id=$1 RETURNING *';
-    const value = [progressId, progress_type_id, company, comments];
+    const value = [parseInt(progressId), progress_type_id, company, comments];
     const data = await db.query(query, value);
 
     const progressItem = data.fields;
