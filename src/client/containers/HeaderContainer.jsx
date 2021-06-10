@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { LOG_OUT } from '../actions/actionTypes.js';
 import HeaderNav from '../components/HeaderNav.jsx';
 import '../styles/containers/header-container.scss';
 
@@ -9,8 +10,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  signOutHandler: () => console.log('Replace me with the action creator')
-})
+  signOutHandler: () => dispatch({
+    type: LOG_OUT,
+  })
+});
 
 export class HeaderContainer extends Component {
 

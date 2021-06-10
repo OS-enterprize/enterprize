@@ -27,7 +27,7 @@ class App extends Component {
   componentDidMount() {
     //blank page
     //send a request to check the session
-    this.props.checkSession();
+    if (!this.props.cookieChecked) this.props.checkSession();
   }
 
   render() {

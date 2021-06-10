@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loginActionCreator } from '../actions/actions.js';
 
+import '../styles/containers/login-page.scss'
+
 const mapStateToProps = (state) => ({
   //dummy state at the moment, will need to change once hooked up with redux store
   authenticated: state.users.authenticated,
@@ -25,19 +27,19 @@ class LoginContainer extends Component {
       <div id='login-form-container' className='user-credential-form-container'>
         <h1>enterprize</h1>
 
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          this.props.login(e);
+        <form 
+          className='user-credential-form'
+          onSubmit={(e) => {
+            e.preventDefault();
+            this.props.login(e);
         }}>
-          <div className='loginItem'>
-            <label htmlFor='login-username'>Username</label>
-            <input type='text' id='login-username'></input>
-          </div>
 
-          <div className='loginItem'>
+            <label htmlFor='login-username'>Username</label>
+            <input type='text' id='login-username' className='credential-input'></input>
+
+
             <label htmlFor='login-password'>Password</label>
-            <input type='password' id='login-password'></input>
-          </div>
+            <input type='password' id='login-password' className='credential-input'></input>
 
           <input type='submit' id='loginButton' value='Log in'></input>
         </form>
