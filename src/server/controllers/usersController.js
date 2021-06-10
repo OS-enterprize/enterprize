@@ -241,9 +241,9 @@ usersController.constructResponse = (req, res, next) => {
 
 
 //ROUTE FOR ADDING A USER TO A GROUP
-progressController.addToGroup = async (req, res, next) => {};
+// usersController.addToGroup = async (req, res, next) => {};
 
 //ROUTE FOR DELETING A USER FROM A GROUP
-progressController.removeFromGroup = async (req, res, next) => {};
+// usersController.removeFromGroup = async (req, res, next) => {};
 
 module.exports = usersController;

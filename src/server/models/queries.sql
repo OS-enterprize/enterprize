@@ -18,7 +18,7 @@ CREATE TABLE progress (
     progress_type_id INT NOT NULL,
     company VARCHAR(255) NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    comments VARCHAR(255) NOT NULL,
+    comments VARCHAR(255),
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(progress_type_id) REFERENCES progress_types(id)
   );
@@ -87,6 +87,15 @@ VALUES
 ('2', '1', 'Birkshire', 'Sent out a resume')
 
 
+--ADDING A PROGRESS ITEM(S) AND RETURNING ID
+INSERT INTO progress 
+(user_id, progress_type_id, company, comments) 
+VALUES 
+(2, 1, 'HP', 'Sent Resume')
+RETURNING
+(id)
+
+
 --PROGRESS TYPES
 INSERT INTO progress_types
 (type_name, type_points) 
@@ -110,3 +119,9 @@ DELETE FROM progress WHERE id='9' AND user_id='2'
 SELECT p.*, pt.type_name
 FROM progress p
 JOIN progress_types pt ON p.progress_type_id=pt.id
+
+SELECT p.*, pt.*
+FROM progress p
+JOIN progress_types pt ON p.progress_type_id=pt.id
+WHERE user_id IN (2) 
+AND timestamp > CURRENT_DATE - 7

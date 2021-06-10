@@ -8,35 +8,40 @@ const progressController = require('../controllers/progressController');
 router.get('/',
   progressController.progressItems,
   (req, res) => {
-    console.log('Entered /progress/');
-    res.status(200).json();
+    console.log('Entered /progress/ - Got progress items');
+    res.status(200).json(res.locals.data);
   }
 );
 
 //ROUTE FOR CREATING NEW PROGRESS ITEMS (POST) - /api/progress/:userID
 router.post('/:userId',
   progressController.createProgress,
+  progressController.addNameAndPoints,
   (req, res) => {
-    console.log('Entered /progress/ - Creating new item');
-    res.status(200).json();
+    console.log('Entered /progress/ - Created new item');
+    console.log(res.locals.progressItem);
+    res.status(200).json(res.locals.progressItem);
   }
 );
 
 //ROUTE FOR DELETING NEW PROGRESS ITEMS (DELETE) - /api/progress/:progressID
-router.delete('/:userId/:progressId',
+router.delete('/:progressId',
   progressController.deleteProgress,
+  progressController.addNameAndPoints,
   (req, res) => {
-    console.log('Entered /progress/ - Deleting new item');
-    res.status(200).json();
+    console.log('Entered /progress/ - Deleted new item');
+    res.status(200).json(res.locals.progressItem);
   }
 );
 
 //ROUTE FOR UPDATING NEW PROGRESS ITEMS (PUT) - /api/progress/:progressID
-router.put('/:userId/:progressId',
+router.put('/:progressId',
   progressController.updateProgress,
+  progressController.addNameAndPoints,
   (req, res) => {
-    console.log('Entered /progress/ - Updating new item');
-    res.status(200).json();
+    console.log('Entered /progress/ - Updated new item');
+    console.log('res.locals.progressItem: \n', res.locals.progressItem);    
+    res.status(200).json(res.locals.progressItem);
   }
 );
 
