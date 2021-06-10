@@ -10,7 +10,7 @@ import './styles/app.global.scss';
 //import actionCreator for checkSession
 
 const mapStateToProps = (state) => ({
-  authenticated: null,
+  authenticated: true,
   checkCookie: true
 })
 
