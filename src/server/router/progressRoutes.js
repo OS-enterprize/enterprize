@@ -14,7 +14,7 @@ router.get('/',
 );
 
 //ROUTE FOR CREATING NEW PROGRESS ITEMS (POST) - /api/progress/:userID
-router.post('/:userID',
+router.post('/:userId',
   progressController.createProgress,
   (req, res) => {
     console.log('Entered /progress/ - Creating new item');
@@ -23,7 +23,7 @@ router.post('/:userID',
 );
 
 //ROUTE FOR DELETING NEW PROGRESS ITEMS (DELETE) - /api/progress/:progressID
-router.delete('/:progressID',
+router.delete('/:userId/:progressId',
   progressController.deleteProgress,
   (req, res) => {
     console.log('Entered /progress/ - Deleting new item');
@@ -32,7 +32,7 @@ router.delete('/:progressID',
 );
 
 //ROUTE FOR UPDATING NEW PROGRESS ITEMS (PUT) - /api/progress/:progressID
-router.put('/:progressID',
+router.put('/:userId/:progressId',
   progressController.updateProgress,
   (req, res) => {
     console.log('Entered /progress/ - Updating new item');
