@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 
 const usersController = {};
 
-/** */
+
+
 usersController.verifySessionCookie = (req, res, next) => {
     
     if (!req.cookies.ssid) {
@@ -238,5 +239,11 @@ usersController.constructResponse = (req, res, next) => {
     return next();
 }
 
+
+//ROUTE FOR ADDING A USER TO A GROUP
+progressController.addToGroup = async (req, res, next) => {};
+
+//ROUTE FOR DELETING A USER FROM A GROUP
+progressController.removeFromGroup = async (req, res, next) => {};
 
 module.exports = usersController;

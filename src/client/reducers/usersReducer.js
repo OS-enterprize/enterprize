@@ -67,7 +67,7 @@ const mainReducer = (state = initialState, action) => {
       //Find the progress item to be updated and replace it with the payload
       progressItems = state.progressItems.map(item => {
         if (item.id === action.payload.id) item = action.payload;
-        return item
+        return item;
       })
 
       return {
