@@ -1,0 +1,8 @@
+@import '../variables/_variables.scss';
+
+.pipeline-component-container {
+  border: 1px solid $SECONDARY_BORDER;
+  border-radius: 15px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
