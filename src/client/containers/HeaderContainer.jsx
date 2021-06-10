@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import HeaderNav from '../components/HeaderNav.jsx';
+import '../styles/containers/header-container.scss';
 
 const mapStateToProps = (state) => ({
   firstName: 'Wesley'

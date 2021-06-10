@@ -6,6 +6,7 @@ import MainPage from './pages/MainPage.jsx';
 import LoginContainer from './pages/Login.jsx';
 import SignUpUser from './pages/SignUp.jsx'
 
+import './styles/app.global.scss';
 //import actionCreator for checkSession
 
 const mapStateToProps = (state) => ({
@@ -16,7 +17,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   checkSession: () => console.log('insertActionCreator to check session here')
 })
-
+  
 class App extends Component {
   constructor(props) {
     super(props);
