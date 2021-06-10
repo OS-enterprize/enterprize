@@ -49,6 +49,7 @@ class App extends Component {
 
       <Router>
         <div>
+         <img src='http://localhost:3000/enterprize-logo.png' id='logo'></img>
           <Switch>
             <Route exact path="/" exact component={MainPageDisplay} />
             <Route path="/signup" component={SignUpUser} />

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { createUserActionCreator } from '../actions/actions.js';
 
-//import action creator for creating the user
+import '../styles/containers/signup-page.scss';
 
 
 const mapStateToProps = (state) => ({
@@ -32,36 +32,30 @@ class SignUpUser extends Component {
           <h1>enterprize</h1>
           <h2>Create an account</h2>
 
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            this.props.createUser(e)
+          <form 
+            className = 'signup-form'
+            onSubmit={(e) => {
+              e.preventDefault();
+              this.props.createUser(e)
           }}>
-            <div>
-              <label htmlFor='create-username'>Username</label>
-              <input type='text' className='create-field' id='create-username'></input>
-            </div>
 
-            <div>
-              <label htmlFor='create-password'>Password</label>
-              <input type='password' className='create-field' id='create-password'></input>
-            </div>
+            <label htmlFor='create-username'>Username</label>
+            <input type='text' className='create-field' id='create-username'></input>
 
-            <div>
-              <label htmlFor='create-email'>Email</label>
-              <input type='text' className='create-field' id='create-email'></input>
-            </div>
+            <label htmlFor='create-password'>Password</label>
+            <input type='password' className='create-field' id='create-password'></input>
 
-            <div>
-              <label htmlFor='create-first-name'>First Name</label>
-              <input type='text' className='create-field' id='create-first-name'></input>
-            </div>
 
-            <div>
-              <label htmlFor='create-last-name'>Last Name</label>
-              <input type='text' className='create-field' id='create-last-name'></input>
-            </div>
+            <label htmlFor='create-email'>Email</label>
+            <input type='text' className='create-field' id='create-email'></input>
 
-            <input type='submit' id='create-button' value='Sign up now'></input>
+            <label htmlFor='create-first-name'>First Name</label>
+            <input type='text' className='create-field' id='create-first-name'></input>
+
+            <label htmlFor='create-last-name'>Last Name</label>
+            <input type='text' className='create-field' id='create-last-name'></input>
+
+            <input type='submit' id='create-button' value='Sign up now' className='create-user-submit-button'></input>
           </form>
 
         </div>

@@ -6,9 +6,20 @@ html {
   }
 
 }
+
 body {
   background-color: $BG_COLOR;
   font-family: $PRIMARY_FONT;
   width: 50%;
   margin: 0 auto;
+}
+
+#logo {
+
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  left: 3%;
+  top: 3%;
+
 }
