@@ -7,17 +7,17 @@ import LoginContainer from './pages/Login.jsx';
 import SignUpUser from './pages/SignUp.jsx'
 
 import './styles/app.global.scss';
-//import actionCreator for checkSession
+import { checkSessionActionCreator } from './actions/actions.js';
 
 const mapStateToProps = (state) => ({
-  authenticated: null,
-  checkCookie: true
+  authenticated,
+  cookieChecked
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  checkSession: () => console.log('insertActionCreator to check session here')
+  checkSession: () => dispatch(checkSessionActionCreator())
 })
-  
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -30,13 +30,13 @@ class App extends Component {
   }
 
   render() {
-    
-    
-    if(this.props.checkCookie === null) {
-      return <div>Wait, the page is loading...</div>;
-    }
 
-    
+
+    // if (this.props.checkCookie === null) {
+    //   return <div>Wait, the page is loading...</div>;
+    // }
+
+
     let MainPageDisplay;
     if (!this.props.authenticated) {
       MainPageDisplay = LoginContainer
@@ -48,10 +48,10 @@ class App extends Component {
 
       <Router>
         <div>
-           <Switch>
-             <Route exact path="/" exact component={MainPageDisplay} />
-             <Route path="/signup" component={SignUpUser} />
-           </Switch>
+          <Switch>
+            <Route exact path="/" exact component={MainPageDisplay} />
+            <Route path="/signup" component={SignUpUser} />
+          </Switch>
         </div>
       </Router>
     )

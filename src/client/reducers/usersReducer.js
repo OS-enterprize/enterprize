@@ -27,7 +27,7 @@ const mainReducer = (state = initialState, action) => {
   let progressItems;
   switch (action.type) {
     case types.LOG_IN:
-      const isLoggedIn = action.payload.login.userId ? true : false;
+      const isLoggedIn = action.payload.userId ? true : false;
       return {
         ...state,
         authenticated: isLoggedIn,
@@ -43,10 +43,10 @@ const mainReducer = (state = initialState, action) => {
       const cookieGood = {
         ...state,
         userId: action.payload.userId,
-        firstName: action.payload.newUser.firstName,
-        lastName: action.payload.newUser.lastName,
-        emailAddress: action.payload.newUser.emailAddress,
-        username: action.payload.newUser.username,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        emailAddress: action.payload.emailAddress,
+        username: action.payload.username,
         cookieChecked: true,
         authenticated: true,
       }
@@ -55,7 +55,7 @@ const mainReducer = (state = initialState, action) => {
         cookieChecked: true,
         authenticated: false,
       }
-      return action.payload.login.id ? cookieGood : cookieBad;
+      return action.payload.userId ? cookieGood : cookieBad;
 
     case types.CREATE_USER:
       const newUserCreated = {
@@ -80,7 +80,7 @@ const mainReducer = (state = initialState, action) => {
         progressItems: action.payload.progress,
       }
 
-    case types.ADD_PROGRESS: 
+    case types.ADD_PROGRESS:
 
       progressItems = [...state.progressItems];
       progressItems.push(action.payload);
@@ -88,9 +88,9 @@ const mainReducer = (state = initialState, action) => {
         ...state,
         progressItems
       };
-  
-    case types.DELETE_PROGRESS: 
-      
+
+    case types.DELETE_PROGRESS:
+
       //Filter out the progress item with the deleted progresm item's ID
       progressItems = state.progressItems.filter(item => item.id !== action.payload.id);
       return {
@@ -110,7 +110,7 @@ const mainReducer = (state = initialState, action) => {
         ...state,
         progressItems
       }
-      
+
     default: return state;
   }
 }
