@@ -16,7 +16,7 @@ import '../styles/containers/pipeline-container.scss';
 const mapStateToProps = (state) => ({
   //Update these to use Redux store
   userId: 2,
-  progressItems: state.users.progressItems
+  progressItems: state.users.progressItems.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
 })
 
 const mapDispatchToProps = (dispatch) => ({

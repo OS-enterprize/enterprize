@@ -9,7 +9,7 @@ router.get('/',
   progressController.progressItems,
   (req, res) => {
     console.log('Entered /progress/ - Got progress items');
-    res.status(200).json(res.locals.data);
+    res.status(200).json({ progress: res.locals.data });
   }
 );
 

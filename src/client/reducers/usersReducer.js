@@ -39,9 +39,11 @@ const mainReducer = (state = initialState, action) => {
       };
 
     case types.GET_PROGRESS:
+
+ 
       return {
         ...state,
-        progressItems: action.payload.progress,
+        progressItems: action.payload.progress
       }
 
     case types.ADD_PROGRESS: 

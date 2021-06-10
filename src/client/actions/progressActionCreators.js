@@ -1,6 +1,14 @@
 import * as types from './actionTypes.js'
 import 'regenerator-runtime/runtime';
 
+const progressTypeMapper = {
+  'Quick Apply': 1,
+  'Manual Apply': 2,
+  'Phone Screen': 3,
+  'Final Round': 4,
+  'Offer': 5
+}
+
 export const getProgressActionCreator = (userId) => async (dispatch, getState) => {
 /*
   Retrieves all progress items for the user.
@@ -10,11 +18,8 @@ export const getProgressActionCreator = (userId) => async (dispatch, getState) =
 
   try {
     const response = await fetch(`http://localhost:3000/api/progress?userId=${userId}`);
-    const responseData = await response.json();
+    const progressItems = await response.json();
 
-    //Response body is expected to provide progress data for only one user,
-    //hence we use the 0th-indexed element's progress array
-    const progressItems = responseData.users[0].progress
     dispatch({
       type: types.GET_PROGRESS,
       payload: progressItems
@@ -34,7 +39,7 @@ export const addProgressActionCreator = (event, userId) => async (dispatch, getS
 */
 
   const requestBody = {
-    progress_type: event.target[0].value, 
+    progress_type_id: progressTypeMapper[event.target[0].value], 
     company: event.target[1].value,
     notes: event.target[2].value
   }
@@ -59,7 +64,7 @@ export const addProgressActionCreator = (event, userId) => async (dispatch, getS
   }
 };
 
-export const deleteProgressActionCreator = (progressId, userId) => async (dispatch, getState) => {
+export const deleteProgressActionCreator = (progressId) => async (dispatch, getState) => {
 /*
   Deletes a progress item:
     - Makes a HTTP DELETE request to delete the progress item resource
@@ -67,11 +72,12 @@ export const deleteProgressActionCreator = (progressId, userId) => async (dispat
 */
 
   try {
-    const response = await fetch(`http://localhost:3000/api/progress/${userId}/${progressId}`, {
+    const response = await fetch(`http://localhost:3000/api/progress/${progressId}`, {
       method: 'DELETE'
     });
 
     const deletedProgressItem = await response.json();
+    console.log(deletedProgressItem);
     dispatch({
       type: types.DELETE_PROGRESS,
       payload: deletedProgressItem
@@ -91,7 +97,7 @@ export const updateProgressActionCreator = (event, progressId) => async (dispatc
 
   const requestBody = {
     company: event.target[0].value,
-    progress_type: event.target[1].value,
+    progress_type_id: progressTypeMapper[event.target[1].value],
     notes: event.target[2].value
   };
 

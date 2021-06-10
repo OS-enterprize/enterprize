@@ -37,6 +37,7 @@ export default (props) => {
           onSubmit={(e) => {
             e.preventDefault();
             props.updateProgressItem(e, props.progressId);
+            setEditingState(false);
           }}
         >
           <label>
