@@ -9,7 +9,7 @@ const progressController = {};
 progressController.progressItems = async (req, res, next) => {
   try {
     const { userId } = req.query;
-    
+
     const query = 'SELECT p.*, pt.* FROM progress p JOIN progress_types pt ON p.progress_type_id=pt.id WHERE user_id IN ($1) AND timestamp > CURRENT_DATE - 7';
     const value = [userId];
     const queryToDB = await db.query(query, value);
@@ -19,7 +19,7 @@ progressController.progressItems = async (req, res, next) => {
 
     return next();
 
-  } catch(error) {
+  } catch (error) {
 
     return next({
       log: `Error in progressController.progressItems: ${error}`,
@@ -45,7 +45,7 @@ progressController.createProgress = async (req, res, next) => {
 
     return next();
 
-  } catch(error) {
+  } catch (error) {
     return next({
       log: `Error in progressController.createProgress: ${error}`,
       message: 'Error creating new progress items'
@@ -63,15 +63,15 @@ progressController.addNameAndPoints = async (req, res, next) => {
     const query = 'SELECT * FROM progress_types WHERE id IN ($1)';
     const value = [progress_type_id];
     const data = await db.query(query, value);
-    
+
     const progressItemInfo = data.rows[0];
-    const combinedObj = {...res.locals.progressItem[0], ...progressItemInfo}
-    console.log('Total Progress item: ', combinedObj);
+
+    const combinedObj = { ...res.locals.progressItem[0], ...progressItemInfo }
     res.locals.progressItem = combinedObj;
-    
+
     return next();
 
-  } catch(error) {
+  } catch (error) {
     return next({
       log: `Error in progressController.addNameAndPoints: ${error}`,
       message: 'Error creating new progress items'
@@ -86,18 +86,18 @@ progressController.addNameAndPoints = async (req, res, next) => {
 progressController.deleteProgress = async (req, res, next) => {
   try {
     const { progressId } = req.params;
-    
+
     const query = 'DELETE FROM progress WHERE id=$1 RETURNING *';
     const value = [progressId];
     const data = await db.query(query, value);
-    
+
     const progressItem = data.rows;
     res.locals.progressItem = progressItem;
 
 
     return next();
 
-  } catch(error) {
+  } catch (error) {
     return next({
       log: `Error in progressController.deleteProgress: ${error}`,
       message: 'Error deleting progress items'
@@ -113,19 +113,17 @@ progressController.updateProgress = async (req, res, next) => {
   try {
     const { progressId } = req.params;
     const { progress_type_id, company, comments } = req.body;
-    
+
     const query = 'UPDATE progress SET progress_type_id = $2, company = $3, comments = $4 WHERE id=$1 RETURNING *';
     const value = [parseInt(progressId), progress_type_id, company, comments];
     const data = await db.query(query, value);
-    console.log(data)
 
-    const progressItem = data.rows;
-    console.log('progressItem: ', progressItem)
+    const progressItem = data.fields;
     res.locals.progressItem = progressItem;
-    
+
     return next();
 
-  } catch(error) {
+  } catch (error) {
     return next({
       log: `Error in progressController.updateProgress: ${error}`,
       message: 'Error updating progress items'

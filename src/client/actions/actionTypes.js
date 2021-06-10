@@ -1,5 +1,6 @@
 export const LOG_IN = "LOG_IN";
 export const LOG_OUT = "LOG_OUT";
+export const CHECK_COOKIE = "CHECK_COOKIE";
 export const CREATE_USER = "CREATE-USER";
 export const GET_PROGRESS = "GET_PROGRESS";
 export const ADD_PROGRESS = "ADD_PROGRESS";
