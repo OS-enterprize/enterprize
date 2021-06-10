@@ -27,11 +27,21 @@ const mainReducer = (state = initialState, action) => {
   let progressItems;
   switch (action.type) {
     case types.LOG_IN:
-      const isLoggedIn = action.payload.userId ? true : false;
-      return {
+      const loginGood = {
         ...state,
-        authenticated: isLoggedIn,
+        userId: action.payload.userId,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        groupIds: action.payload.groupIds,
+        emailAddress: action.payload.email,
+        username: action.payload.username,
+        authenticated: true,
       }
+      const loginFailed = {
+        ...state,
+        authenticated: false,
+      }
+      return action.payload.userId ? loginGood : loginFailed;
 
     case types.LOG_OUT:
       return {
@@ -45,7 +55,8 @@ const mainReducer = (state = initialState, action) => {
         userId: action.payload.userId,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
-        emailAddress: action.payload.emailAddress,
+        groupIds: action.payload.groupIds,
+        emailAddress: action.payload.email,
         username: action.payload.username,
         cookieChecked: true,
         authenticated: true,
@@ -63,7 +74,8 @@ const mainReducer = (state = initialState, action) => {
         userId: action.payload.userId,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
-        emailAddress: action.payload.emailAddress,
+        groupIds: action.payload.groupIds,
+        emailAddress: action.payload.email,
         username: action.payload.username,
         authenticated: true,
       }

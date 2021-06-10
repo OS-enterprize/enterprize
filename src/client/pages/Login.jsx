@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createUserActionCreator } from '../actions/actions.js';
+import { loginActionCreator } from '../actions/actions.js';
 
 const mapStateToProps = (state) => ({
   //dummy state at the moment, will need to change once hooked up with redux store
@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  login: () => dispatch(createUserActionCreator(e))
+  login: (e) => dispatch(loginActionCreator(e))
 });
 
 class LoginContainer extends Component {

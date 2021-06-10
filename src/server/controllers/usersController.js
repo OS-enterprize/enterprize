@@ -136,8 +136,6 @@ usersController.getGroupsFromUserID = (req, res, next) => {
                 log: `Error in getGroupsFromUserID when executing query: ${err}`
             })
         })
-
-
 }
 
 usersController.getUserInfoByUsername = (req, res, next) => {
@@ -154,7 +152,6 @@ usersController.getUserInfoByUsername = (req, res, next) => {
                 res.locals.finalResponse = {};
                 return next();
             }
-
             res.locals.allUserInfo = data.rows[0]
             return next();
 

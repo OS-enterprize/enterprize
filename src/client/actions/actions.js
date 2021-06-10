@@ -19,6 +19,9 @@ export const loginActionCreator = (e) => (dispatch, getState) => {
         payload: data
       })
     })
+    .catch(err => {
+      console.log(err)
+    })
 }
 
 export const checkSessionActionCreator = () => (dispatch, getState) => {
@@ -30,6 +33,9 @@ export const checkSessionActionCreator = () => (dispatch, getState) => {
         type: types.CHECK_COOKIE,
         payload: data
       })
+    })
+    .catch(err => {
+      console.log(err)
     })
   //once a response is returned, we dispatch and object with type: CHEKC_COOKIE, payload: response
 }
@@ -43,7 +49,6 @@ export const logoutActionCreator = (loggedOut) => ({
 });
 
 export const createUserActionCreator = (e) => (dispatch, getState) => {
-  console.log(e);
   fetch('http://localhost:3000/api/users/create/', {
     method: 'POST',
     headers: {
@@ -63,6 +68,9 @@ export const createUserActionCreator = (e) => (dispatch, getState) => {
         type: types.CREATE_USER,
         payload: data
       })
+    })
+    .catch(err => {
+      console.log(err)
     })
 };
 

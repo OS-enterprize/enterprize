@@ -31,15 +31,6 @@ progressController.progressItems = async (req, res, next) => {
 
 
 //CONTROLLER FOR CREATING NEW PROGRESS ITEMS
-<<<<<<< HEAD
-progressController.createProgress = async (req, res, next) => { };
-
-//CONTROLLER FOR DELETING NEW PROGRESS ITEMS 
-progressController.deleteProgress = async (req, res, next) => { };
-
-//CONTROLLER FOR UPDATING NEW PROGRESS ITEMS
-progressController.updateProgress = async (req, res, next) => { };
-=======
 progressController.createProgress = async (req, res, next) => {
   try {
     const { userId } = req.params;
@@ -54,7 +45,7 @@ progressController.createProgress = async (req, res, next) => {
 
     return next();
 
-  } catch(error) {
+  } catch (error) {
     return next({
       log: `Error in progressController.createProgress: ${error}`,
       message: 'Error creating new progress items'
@@ -74,12 +65,12 @@ progressController.addNameAndPoints = async (req, res, next) => {
     const data = await db.query(query, value);
 
     const progressItemInfo = data.rows[0];
-    const combinedObj = {...res.locals.progressItem[0], ...progressItemInfo}
+    const combinedObj = { ...res.locals.progressItem[0], ...progressItemInfo }
     res.locals.progressItem = combinedObj;
 
     return next();
 
-  } catch(error) {
+  } catch (error) {
     return next({
       log: `Error in progressController.addNameAndPoints: ${error}`,
       message: 'Error creating new progress items'
@@ -105,7 +96,7 @@ progressController.deleteProgress = async (req, res, next) => {
 
     return next();
 
-  } catch(error) {
+  } catch (error) {
     return next({
       log: `Error in progressController.deleteProgress: ${error}`,
       message: 'Error deleting progress items'
@@ -131,14 +122,13 @@ progressController.updateProgress = async (req, res, next) => {
 
     return next();
 
-  } catch(error) {
+  } catch (error) {
     return next({
       log: `Error in progressController.updateProgress: ${error}`,
       message: 'Error updating progress items'
     });
   }
 };
->>>>>>> main
 
 
 module.exports = progressController;
