@@ -27,6 +27,7 @@ const mainReducer = (state = initialState, action) => {
   let progressItems;
   switch (action.type) {
     case types.LOG_IN:
+      console.log('state during log in action: ', state);
       const loginGood = {
         ...state,
         userId: action.payload.userId,
@@ -66,6 +67,7 @@ const mainReducer = (state = initialState, action) => {
         cookieChecked: true,
         authenticated: false,
       }
+
       return action.payload.userId ? cookieGood : cookieBad;
 
     case types.CREATE_USER:

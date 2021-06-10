@@ -29,6 +29,7 @@ export const checkSessionActionCreator = () => (dispatch, getState) => {
   fetch('http://localhost:3000/api/users/')
     .then((resp) => resp.json())
     .then((data) => {
+      console.log('checked cookie data: ', data);
       dispatch({
         type: types.CHECK_COOKIE,
         payload: data

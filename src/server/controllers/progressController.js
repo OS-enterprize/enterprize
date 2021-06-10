@@ -67,7 +67,6 @@ progressController.addNameAndPoints = async (req, res, next) => {
     const query = 'SELECT pt.type_name, pt.type_points FROM progress_types pt WHERE id IN ($1)';
     const value = [progress_type_id];
     const data = await db.query(query, value);
-
     const progressItemInfo = data.rows[0];
     const combinedObj = {
       ...res.locals.progressItem[0], 
@@ -126,7 +125,7 @@ progressController.updateProgress = async (req, res, next) => {
     const value = [parseInt(progressId), progress_type_id, company, notes];
     const data = await db.query(query, value);
 
-    const progressItem = data.fields;
+    const progressItem = data.rows;
     res.locals.progressItem = progressItem;
 
     return next();
