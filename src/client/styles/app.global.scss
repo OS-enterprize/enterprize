@@ -1,8 +1,14 @@
-@import './variables/variables.scss';
+@import './globals/variables.scss';
 
+html {
+  @media screen and (max-width: $SMALL_SCREEN_MAX) {
+    min-width: $SMALL_SCREEN_MAX;
+  }
+
+}
 body {
   background-color: $BG_COLOR;
   font-family: $PRIMARY_FONT;
-  width: 70%;
+  width: 50%;
   margin: 0 auto;
 }

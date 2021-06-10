@@ -1,3 +1,6 @@
+@import '../globals/_variables.scss';
+@import '../globals/_template-styles.scss';
+
 .header-nav-container {
   display: flex;
   align-items: center;
@@ -5,6 +8,13 @@
 }
 
 .sign-out-button {
+  font-family: $PRIMARY_FONT;
   background-color: transparent;
-  border: 1px solid black; 
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+.sign-out-button:hover {
+  background-color: darken($BG_COLOR, 3%);
 }
