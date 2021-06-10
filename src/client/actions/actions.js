@@ -33,7 +33,6 @@ export const checkSessionActionCreator = () => (dispatch, getState) => {
     })
   //once a response is returned, we dispatch and object with type: CHEKC_COOKIE, payload: response
 }
-
 //mapDispatchToProps = (dispatch) => {
 //checkSession: () => dispatch(checkSessionActionCreator());
 //}
@@ -43,10 +42,29 @@ export const logoutActionCreator = (loggedOut) => ({
   payload: logout
 });
 
-export const createUserActionCreator = (newUser) => ({
-  type: types.CREATE_USER,
-  payload: newUser
-});
+export const createUserActionCreator = (e) => (dispatch, getState) => {
+  console.log(e);
+  fetch('http://localhost:3000/api/users/create/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      username: e.target[0].value,
+      password: e.target[1].value,
+      email: e.target[2].value,
+      firstName: e.target[3].value,
+      lastName: e.target[4].value
+    })
+  })
+    .then((resp) => resp.json())
+    .then((data) => {
+      dispatch({
+        type: types.CREATE_USER,
+        payload: data
+      })
+    })
+};
 
 export const getProgressActionCreator = (progress) => ({
   type: types.GET_PROGRESS,

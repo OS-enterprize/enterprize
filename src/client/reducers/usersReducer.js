@@ -60,18 +60,18 @@ const mainReducer = (state = initialState, action) => {
     case types.CREATE_USER:
       const newUserCreated = {
         ...state,
-        userId: action.payload.newUser.userId,
-        firstName: action.payload.newUser.firstName,
-        lastName: action.payload.newUser.lastName,
-        emailAddress: action.payload.newUser.emailAddress,
-        username: action.payload.newUser.username,
+        userId: action.payload.userId,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        emailAddress: action.payload.emailAddress,
+        username: action.payload.username,
         authenticated: true,
       }
       const newUserFailed = {
         ...state,
         authenticated: false,
       }
-      return action.payload.newUser.userId ? newUserCreated : newUserFailed;
+      return action.payload.userId ? newUserCreated : newUserFailed;
       ;
 
     case types.GET_PROGRESS:

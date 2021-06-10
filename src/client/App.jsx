@@ -7,15 +7,16 @@ import LoginContainer from './pages/Login.jsx';
 import SignUpUser from './pages/SignUp.jsx'
 
 import './styles/app.global.scss';
-import { checkSessionActionCreator } from './actions/actions.js';
+import { checkSessionActionCreator, createUserActionCreator } from './actions/actions.js';
 
 const mapStateToProps = (state) => ({
-  authenticated,
-  cookieChecked
+  authenticated: state.users.authenticated,
+  cookieChecked: state.users.cookieChecked
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  checkSession: () => dispatch(checkSessionActionCreator())
+  checkSession: () => dispatch(checkSessionActionCreator()),
+  createUser: () => dispatch(createUserActionCreator())
 })
 
 class App extends Component {
