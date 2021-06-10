@@ -31,7 +31,10 @@ class SignUpUser extends Component {
       <h1>enterprize</h1>
       <h2>Create an account</h2>
 
-      <form onSubmit={(e) => createUser(e)}>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        this.props.createUser(e)
+      }}>
         <div>
           <label htmlFor='create-username'>Username</label>
           <input type='text' className='create-field' id='create-username'></input>

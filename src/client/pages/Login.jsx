@@ -24,7 +24,10 @@ class LoginContainer extends Component {
         <div id='login-form-container' className='user-credential-form-container'>
       <h1>enterprize</h1>
       
-      <form onSubmit={(e) => login(e)}>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        this.props.login(e);
+      }}>
         <div className='loginItem'>
           <label htmlFor='login-username'>Username</label>
           <input type='text' id='login-username'></input>
