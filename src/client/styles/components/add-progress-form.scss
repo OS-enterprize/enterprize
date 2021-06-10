@@ -1,0 +1,58 @@
+@import '../globals/_variables.scss';
+@import '../globals/_template-styles.scss';
+
+.add-progress-form {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+
+  * {
+    margin: 0.1rem 0;
+  }
+
+  .progress-type-selector {
+    @extend .select-menu;
+  }
+
+  .form-span-label {
+    width: 5rem;
+    display: inline-block;
+
+  }
+
+  .notes-container {
+    margin: 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .company-name-input {
+    @extend .single-line-input;
+  }
+
+  .notes-input {
+    @extend .multi-line-input;
+  }
+}
+
+.add-progress-form-button-container {
+
+  display: flex;
+  justify-content: flex-end;
+
+  * {
+    margin: 0 0.2rem;
+    height: 1.5rem;
+    padding: 0.35rem 0.5rem 0.2rem;
+  }
+
+  .add-progress-form-submit {
+    @extend .primary-button;
+  }
+
+  .add-progress-form-cancel-button {
+    @extend .secondary-button;
+  }
+}
+

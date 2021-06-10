@@ -1,8 +1,62 @@
-@import '../variables/_variables.scss';
+@import '../globals/_variables.scss';
+@import '../globals/_template-styles.scss';
 
 .pipeline-component-container {
   border: 1px solid $SECONDARY_BORDER;
   border-radius: 15px;
   padding: 1rem;
   margin: 1rem 0;
+}
+
+.progress-buttons-container.non-edit-mode {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    height: 1.5rem;
+    width: 5rem;
+    margin: 0 0.5rem;
+  }
+
+  .edit-progress-button {
+    @extend .primary-button;
+  }
+
+  .remove-progress-button {
+    @extend .secondary-button;
+  }
+}
+
+.pipeline-edit-form {
+  display: flex;
+  flex-direction: column;
+
+  $right-padding-only: 0 0.5rem 0 0;
+
+  .company-text-value {
+    display: inline-block;
+    padding: $right-padding-only
+  }
+
+  
+
+  .progress-buttons-container.edit-mode {
+
+    display: flex;
+    justify-content: flex-end;
+
+    * {
+      width: 5rem;
+      margin: 0 0.5rem;
+      padding: 0.35rem 0.2rem 0.2rem;
+    }
+
+    .progress-submit-button {
+      @extend .primary-button;
+    } 
+    
+    .clear-progress-edit-button {
+      @extend .secondary-button;
+    }
+  }
 }

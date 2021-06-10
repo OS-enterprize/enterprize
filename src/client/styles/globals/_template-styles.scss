@@ -1,0 +1,52 @@
+@import './_variables.scss';
+
+.button {
+  font-family: $PRIMARY_FONT;
+  border-radius: 5px;
+}
+
+.primary-button {
+  @extend .button;
+  background-color: $PRIMARY_BUTTON_COLOR;
+  border: 1px solid $PRIMARY_BUTTON_COLOR;
+  color: $LIGHT_FONT;
+}
+
+.primary-button:hover {
+  cursor: pointer;
+  background-color: darken($PRIMARY_BUTTON_COLOR, 10%);
+  border: 1px solid darken($PRIMARY_BUTTON_COLOR, 10%);
+}
+
+.secondary-button {
+  @extend .button;
+  border: 1px solid $PRIMARY_BUTTON_COLOR;
+  background-color: transparent;
+}
+
+.secondary-button:hover {
+  cursor: pointer;
+  background-color: darken($PRIMARY_LIGHT, 1%);
+}
+
+
+// .input {
+//   border: 1px solid $PRIMARY_BORDER;
+// }
+
+.single-line-input {
+  // @extend .input;
+  font-family: $PRIMARY_FONT;
+}
+
+
+.multi-line-input {
+  // @extend .input;
+  font-family: $PRIMARY_FONT;
+}
+
+.select-menu {
+  font-family: $PRIMARY_FONT;
+  font-size: 0.7rem;
+  height: 1.2rem;
+}

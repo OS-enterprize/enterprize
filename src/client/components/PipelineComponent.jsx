@@ -41,13 +41,17 @@ export default (props) => {
         >
           <label>
             <h3 className='company-text'>
-              Company: 
+              <span className='company-text-value'>
+              Company:
+              </span> 
               <input defaultValue={props.company}/>
             </h3>
           </label>
           {staticElements.date}
           <label>
+            <span>
             Stage:
+            </span>
             <select name='progress-type-selector'>
               <option value='Quick Apply'>Quick Apply</option>
               <option value='Manual Apply'>Manual Apply</option>
@@ -58,13 +62,11 @@ export default (props) => {
           </label>
           {staticElements.points}
           <label>
+            <span>
             Notes:
+            </span>
             <input defaultValue={props.notes}/>
           </label>
-
-          <input type='submit'/>
-
-        </form>
 
         <div className='progress-buttons-container edit-mode'>
           <button
@@ -73,7 +75,10 @@ export default (props) => {
           >
             Clear
           </button>
+          <input type='submit' className='progress-submit-button'/>
         </div>
+
+        </form>
 
       </div>
     )
@@ -97,7 +102,9 @@ export default (props) => {
 
       <div className='progress-item-detail-container non-edit-mode'>
         <h3 className='company-text'>
+          <span>
           {props.company}
+          </span>
         </h3>
         {staticElements.date}
         <p className='progress-type-text'>
